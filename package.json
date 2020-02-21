@@ -1,0 +1,47 @@
+{
+  "name": "cb-storage",
+  "version": "1.0.0",
+  "description": "Storage service and hook for React app",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "module": "dist/index.m.js",
+  "types": "dist/src/index.d.ts",
+  "repository": "https://github.com/ICodeMyOwnLife/cb-storage.git",
+  "author": "Hien CB",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "del dist",
+    "build": "microbundle",
+    "dev": "microbundle watch",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "lint:fix": "yarn lint --fix",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.21",
+    "del-cli": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-react-ts": "^1.3.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
+    "microbundle": "^0.12.0-next.8",
+    "typescript": "^3.7.5"
+  },
+  "peerDependencies": {
+    "react": "> 16.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn type-check && yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "yarn lint:fix"
+    ],
+    "{*.{json,md}}": [
+      "prettier --write"
+    ]
+  }
+}
