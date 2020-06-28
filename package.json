@@ -1,39 +1,68 @@
 {
   "name": "cb-storage",
   "version": "1.0.0",
-  "description": "Storage service and hook for React app",
+  "description": "Storage services and hooks for React app",
+  "author": "Hien CB",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ICodeMyOwnLife/cb-storage.git"
+  },
+  "license": "MIT",
+  "private": false,
   "source": "src/index.ts",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "umd:main": "dist/index.umd.js",
-  "module": "dist/index.m.js",
-  "types": "dist/src/index.d.ts",
-  "repository": "https://github.com/ICodeMyOwnLife/cb-storage.git",
-  "author": "Hien CB",
-  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "sideEffects": false,
   "scripts": {
-    "prebuild": "del dist",
-    "build": "microbundle",
-    "dev": "microbundle watch",
+    "build": "rollup -c rollup/rollup.config.js",
+    "build:config": "tsc -p rollup",
+    "build:type": "tsc --emitDeclarationOnly -p .",
+    "commit": "git-cz",
+    "dev": "rollup -w -c rollup/rollup.config.js",
+    "format": "prettier --write \"src/**/*.{ts,tsx,md}\"",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint:fix": "yarn lint --fix",
+    "prebuild": "del dist",
+    "prepublishOnly": "yarn build",
+    "release": "release-it --ci",
+    "size": "size-limit",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/react": "^16.9.21",
-    "del-cli": "^3.0.0",
-    "eslint": "^6.8.0",
-    "eslint-config-react-ts": "^1.3.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.7",
-    "microbundle": "^0.12.0-next.8",
-    "typescript": "^3.7.5"
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-conventional": "^9.0.1",
+    "@release-it/conventional-changelog": "^1.1.4",
+    "@size-limit/preset-small-lib": "^4.3.1",
+    "@types/react": "^16.9.41",
+    "commitizen": "^4.1.2",
+    "cz-conventional-changelog": "^3.2.0",
+    "del-cli": "^3.0.1",
+    "eslint": "^7.0.0",
+    "eslint-config-react-ts": "^2.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.4",
+    "release-it": "^13.6.1",
+    "rollup": "^2.10.4",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-filesize": "^9.0.0",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "size-limit": "^4.5.0",
+    "typescript": "^3.9.2"
   },
-  "peerDependencies": {
-    "react": "> 16.8.0"
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn type-check && yarn lint-staged"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "yarn type-check && yarn lint-staged && yarn size"
     }
   },
   "lint-staged": {
@@ -43,5 +72,12 @@
     "{*.{json,md}}": [
       "prettier --write"
     ]
+  },
+  "engines": {
+    "node": ">= 12.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8",
+    "react-dom": "^16.8"
   }
 }

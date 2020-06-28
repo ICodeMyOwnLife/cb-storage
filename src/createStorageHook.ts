@@ -1,4 +1,4 @@
-import { useState, useCallback, SetStateAction, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import StorageService from './StorageService';
 
 const createStorageHook = (storageService: StorageService) => {
@@ -11,15 +11,8 @@ const createStorageHook = (storageService: StorageService) => {
     );
 
     const updateStorageData = useCallback(
-      (setStateAction: SetStateAction<TValue | null>) => {
-        setData(prevData => {
-          const newData =
-            setStateAction instanceof Function
-              ? setStateAction(prevData)
-              : setStateAction;
-          storageService.setData(storageKey, newData);
-          return newData;
-        });
+      (newData: TValue | null) => {
+        storageService.setData(storageKey, newData);
       },
       [storageKey],
     );
