@@ -7,7 +7,7 @@ const createStorageHook = (storageService: StorageService) => {
     initialData: TValue | null = null,
   ) => {
     const [data, setData] = useState(
-      () => storageService.getData<TValue>(storageKey) || initialData,
+      () => storageService.getData<TValue>(storageKey) ?? initialData,
     );
 
     const updateStorageData = useCallback(
