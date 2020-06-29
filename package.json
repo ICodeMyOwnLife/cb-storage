@@ -1,6 +1,6 @@
 {
   "name": "cb-storage",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Storage services and hooks for React app",
   "author": "Hien CB",
   "repository": {
